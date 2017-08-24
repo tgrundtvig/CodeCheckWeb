@@ -18,9 +18,9 @@ public class Config
 
     
     //  Database credentials
-    public static final String USER = "codecheck";
-    public static final String PASS = "CLASS2sem";
+    public static final String USER = "Edutor";
+    public static final String PASS = "qwerty123";
     
     //public static final String UPLOAD_FOLDER = "/home/pi/CodeCheck/HandIn/";
-    public static final String UPLOAD_FOLDER = "/home/tobias/codecheck/"; 
+    public static final String UPLOAD_FOLDER = "C:\\tmp\\HandIn\\"; 
 }
