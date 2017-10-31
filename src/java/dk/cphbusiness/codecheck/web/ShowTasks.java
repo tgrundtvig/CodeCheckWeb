@@ -58,41 +58,36 @@ public class ShowTasks extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter())
         {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Assignments</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Assignments for " + user.getFullName() + "</h1>");
-            out.println("<table border=1>");
-            out.println("<tr><th>Name</th><th>Begin</th><th>End</th><th>Attempts</th><th>Status</th></tr>");
+            StringBuilder body = new StringBuilder();
+            body.append("<h1>Assignments for ").append(user.getFullName()).append("</h1>");
+            body.append("<table class=\"table\">");
+            body.append("<tr><th>Name</th><th>Begin</th><th>End</th><th>Attempts</th><th>Status</th></tr>");
             for(Task t : tasks)
             {
-                out.print("<tr><td><a href=\"/CodeCheckWeb/ShowTask?TaskID=" + t.getID() + "\">");
-                out.print(t.getName());
-                out.print("</a></td><td>");
-                out.print(t.getBegin());
-                out.print("</td><td>");
-                out.print(t.getEnd());
-                out.print("</td><td>");
-                out.print(t.getAttempts());
-                out.print(" / ");
+                body.append("<tr><td><a href=\"/CodeCheckWeb/ShowTask?TaskID=").append(t.getID()).append("\">");
+                body.append(t.getName());
+                body.append("</a></td><td>");
+                body.append(t.getBegin());
+                body.append("</td><td>");
+                body.append(t.getEnd());
+                body.append("</td><td>");
+                body.append(t.getAttempts());
+                body.append(" / ");
                 if(t.getMaxHandins() < 1)
                 {
-                    out.print(" INF");
+                    body.append(" INF");
                 }
                 else
                 {
-                    out.print(t.getMaxHandins());
+                    body.append(t.getMaxHandins());
                 }
-                out.print("</td><td>");
-                out.print(t.getStatus());
-                out.println("</td></tr>");
+                body.append("</td><td>");
+                body.append(t.getStatus());
+                body.append("</td></tr>");
             }
-            out.println("</table>");
-            out.println("</body>");
-            out.println("</html>");
+            body.append("</table>");
+            String page = BootstrapUtil.createPage("Show assignments", body.toString());
+            out.println(page);
         }
     }
 

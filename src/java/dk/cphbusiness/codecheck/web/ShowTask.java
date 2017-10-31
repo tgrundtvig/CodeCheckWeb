@@ -70,19 +70,13 @@ public class ShowTask extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter())
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Show assignment</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Assignment: " + task.getName() + "</h1>");
-            out.println("<h2>Description:</h2>");
-            out.println("<div>" + assignment.getDescription() + "</div>");
-            out.println("<h2>Visible tests:</h2>");
-            out.println("<table border=\"1\">");
-            out.println("<tr><th>Input</th><th>Expected output</th></tr>");
+            StringBuilder body = new StringBuilder();
+            body.append("<h1>Assignment: ").append(task.getName()).append("</h1>");
+            body.append("<h2>Description:</h2>");
+            body.append("<p>").append(assignment.getDescription()).append("</p>");
+            body.append("<h2>Visible tests:</h2>");
+            body.append("<table class=\"table\">");
+            body.append("<tr><th>Input</th><th>Expected output</th></tr>");
             int hiddenCount = 0;
             for(AssignmentTest test : tests)
             {
@@ -92,47 +86,101 @@ public class ShowTask extends HttpServlet
                 }
                 else
                 {
-                    out.print("<tr><td>");
-                    out.print(test.getInput());
-                    out.print("</td><td>");
-                    out.print(test.getExpected());
-                    out.println("</td></tr>");
+                    body.append("<tr><td>");
+                    body.append(BootstrapUtil.code(test.getInput()));
+                    body.append("</td><td>");
+                    body.append(BootstrapUtil.code(test.getExpected()));
+                    body.append("</td></tr>");
                 }
             }
-            out.println("</table>");
-            out.print("<h2>Hidden tests: ");
-            out.print(hiddenCount);
-            out.println("</h2>");
-            out.println("<h2>Uploaded attempts: " + task.getAttempts() + " / " + ((task.getMaxHandins() < 1) ? "INF" : task.
-                                                                         getMaxHandins()) + "</h2>");
+            body.append("</table>");
+            body.append("<h2>Hidden tests: ");
+            body.append(hiddenCount);
+            body.append("</h2>");
+            body.append("<h2>Uploaded attempts: ").append(task.getAttempts()).append(" / ").append((task.getMaxHandins() < 1) ? "INF" : task.
+                    getMaxHandins()).append("</h2>");
             if(task.getAttempts() > 0)
             {
-                out.println("<table border=\"1\">");
-                out.println("<tr><th>When</th><th>Status</th></tr>");
+                body.append("<table class=\"table\">");
+                body.append("<tr><th>When</th><th>Status</th></tr>");
                 for(Report report : reports)
                 {
-                    out.print("<tr><td>");
+                    body.append("<tr><td>");
                     SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd HH:mm:ss");
-                    out.print(ft.format(report.getCreated()));
-                    out.print("</td><td><a href=\"/CodeCheckWeb/ShowReport?ReportID=" + report.getId() + "\">");
-                    out.print(report.getStatus());
-                    out.println("</a></td></tr>");
+                    body.append(ft.format(report.getCreated()));
+                    body.append("</td><td><a href=\"/CodeCheckWeb/ShowReport?ReportID=").append(report.getId()).append("\">");
+                    body.append(report.getStatus());
+                    body.append("</a></td></tr>");
                 }
-                out.println("</table>");
+                body.append("</table>");
             }
             if(task.getMaxHandins() < 1 || task.getAttempts() < task.getMaxHandins())
             {
-                out.println("<h2>Upload solution jar-file:</h2>");
-                out.println("<form action=\"/CodeCheckWeb/Upload\" method=\"post\" enctype=\"multipart/form-data\">");
-                out.println("<input type=\"hidden\" name=\"TaskID\" value=\"" + task.getID() + "\" />");
-                out.println("<div>Choose file to upload:</div>");
-                out.println("<input type=\"file\" name=\"file\" />");
-                out.println("<input type=\"submit\" />");
-                out.println("</form>");
+                
+                
+                body.append("<h2>Upload solution jar-file:</h2>");
+                body.append("<form action=\"/CodeCheckWeb/Upload\" method=\"post\" enctype=\"multipart/form-data\">");
+                body.append("<input type=\"hidden\" name=\"TaskID\" value=\"").append(task.getID()).append("\" />");
+                body.append("<div>Choose file to upload:</div>");
+                body.append("<input type=\"file\" name=\"file\" />");
+                body.append("<input type=\"submit\" />");
+                body.append("</form>");
+                
+                
+                //body.append("<h2>Upload solution jar-file:</h2>");
+                //body.append("<form action=\"/CodeCheckWeb/Upload\" method=\"post\" enctype=\"multipart/form-data\">");
+                //body.append("<input type=\"hidden\" name=\"TaskID\" value=\"").append(task.getID()).append("\" />");
+                
+               /* 
+                body.append("<div class=\"form-group\">");
+		body.append("<div class=\"input-group input-file\" name=\"Fichier1\">");
+                body.append("<span class=\"input-group-btn\">");
+                body.append("<button class=\"btn btn-default btn-choose\" type=\"button\">Choose</button>");
+    		body.append("</span>");
+    		body.append("<input type=\"text\" class=\"form-control\" placeholder='Choose a file...' />");
+    		body.append("<span class=\"input-group-btn\">");
+                body.append("<button class=\"btn btn-warning btn-reset\" type=\"button\">Reset</button>");
+    		body.append("</span>");
+		body.append("</div>");
+                body.append("</div>");
+                */
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+               // body.append("<div class=\"form-group\">");
+                //body.append("<label for=\"file\">Choose file to upload:");
+                //body.append("<input class=\"btn btn-default btn-file\" type=\"file\" name=\"file\" id=\"file\" />");
+                //body.append("</label>");
+                /*
+                body.append("<label class=\"btn btn-primary\" for=\"file-selector\">");
+                body.append("<input id=\"file-selector\" type=\"file\" style=\"display:none\" ");
+                body.append("onchange=\"$('#file-info').html(this.files[0].name)\">");
+                body.append("Choose file:");
+                body.append("</label>");
+                body.append("<span class='label label-info' id=\"file-info\">No file chosen!</span>");
+                
+                body.append("<input class=\"btn btn-primary\" type=\"submit\" />");
+                body.append("</div>");
+                
+                
+                
+                body.append("</form>");
+                */
             }
-
-            out.println("</body>");
-            out.println("</html>");
+            
+            String page = BootstrapUtil.createPage("Show assignment", body.toString());
+            out.println(page);
         }
     }
 

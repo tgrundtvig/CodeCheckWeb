@@ -64,26 +64,17 @@ public class ShowReport extends HttpServlet
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter())
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Show report</title>");
-            if("RUNNING".equals(report.getStatus()))
-            {
-                out.println("<META HTTP-EQUIV=\"refresh\" CONTENT=\"5\">");
-            }
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Assignment: " + assignment.getName() + "</h1>");
-            out.println("<div>" + assignment.getDescription() + "</div>");
-            out.println("<h2>Attempt #" + task.getAttempts() + "</h2>");
+            StringBuilder body = new StringBuilder();
+            
+            body.append("<h1>Assignment: ").append(assignment.getName()).append("</h1>");
+            body.append("<div>").append(assignment.getDescription()).append("</div>");
+            body.append("<h2>Attempt #").append(task.getAttempts()).append("</h2>");
             SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd HH:mm:ss");
-            out.println("<div>Time: " + ft.format(report.getCreated()) + "</div>");
-            out.println("<h3>Status: " + report.getStatus() + "</h3>");
-            out.println("<h2>Visible tests:</h2>");
-            out.println("<table border=\"1\">");
-            out.println("<tr><th>Input</th><th>Expected output</th><th>Actual output</th><th>Status</th></tr>");
+            body.append("<div>Time: ").append(ft.format(report.getCreated())).append("</div>");
+            body.append("<h3>Status: ").append(report.getStatus()).append("</h3>");
+            body.append("<h2>Visible tests:</h2>");
+            body.append("<table class=\"table\">");
+            body.append("<tr><th>Input</th><th>Expected output</th><th>Actual output</th><th>Status</th></tr>");
             int hiddenCount = 0;
             int hiddenOK = 0;
             int hiddenFailed = 0;
@@ -103,24 +94,24 @@ public class ShowReport extends HttpServlet
                 }
                 else
                 {
-                    out.print("<tr><td>");
-                    out.print(line.getTest().getInput());
-                    out.print("</td><td>");
-                    out.print(line.getTest().getExpected());
-                    out.print("</td><td>");
-                    out.print(line.getOutput());
-                    out.print("</td><td>");
-                    out.print(line.getStatus());
-                    out.println("</td></tr>");
+                    body.append("<tr><td>");
+                    body.append(BootstrapUtil.code(line.getTest().getInput()));
+                    body.append("</td><td>");
+                    body.append(BootstrapUtil.code(line.getTest().getExpected()));
+                    body.append("</td><td>");
+                    body.append(BootstrapUtil.code(line.getOutput()));
+                    body.append("</td><td>");
+                    body.append(line.getStatus());
+                    body.append("</td></tr>");
                 }
             }
-            out.println("</table>");
-            out.print("<h2>Hidden tests: ");
-            out.print(hiddenCount);
-            out.print(", " + hiddenOK + " OK, " + hiddenFailed + " FAILED");
-            out.println("</h2>");
-            out.println("</body>");
-            out.println("</html>");
+            body.append("</table>");
+            body.append("<h2>Hidden tests: ");
+            body.append(hiddenCount);
+            body.append(", ").append(hiddenOK).append(" OK, ").append(hiddenFailed).append(" FAILED");
+            body.append("</h2>");
+            String page = BootstrapUtil.createPage("Show Report", body.toString(), true);
+            out.println(page);
         }
     }
     

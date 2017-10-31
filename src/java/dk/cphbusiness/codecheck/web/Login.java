@@ -64,28 +64,26 @@ public class Login extends HttpServlet
     private void printForm(HttpServletResponse response, String msg) throws IOException
     {
         response.setContentType("text/html;charset=UTF-8");
+        
+        StringBuilder body = new StringBuilder();
+        body.append("<h2>Login</h2>");
+        body.append("<form method=\"post\">");
+        body.append("<div class=\"form-group\">");
+        body.append("<label for=\"email\">Email:</label>");
+        body.append("<input type=\"email\" class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Enter email\">");
+        body.append("</div>");
+        body.append("<div class=\"form-group\">");
+        body.append("<label for=\"pwd\">Password:</label>");
+        body.append("<input type=\"password\" class=\"form-control\" id=\"pwd\" name=\"passwd\" placeholder=\"Enter password\">");
+        body.append("</div>");
+        body.append("<button type=\"submit\" class=\"btn btn-default\">Submit</button>");
+        body.append("</form>");
+
+        String page = BootstrapUtil.createPage("Login", body.toString());
+        
         try(PrintWriter out = response.getWriter())
         {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Login</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Login</h1>");
-            if(msg != null)
-            {
-                out.println("<h4>" + msg + "</h4>");
-            }
-            out.println("<form method=\"post\">");
-            out.println("Email:<br>");
-            out.println("<input type=\"text\" name=\"email\"><br>");
-            out.println("Password:<br>");
-            out.println("<input type=\"password\" name=\"passwd\">");
-            out.println("<input type=\"submit\" name=\"submit\" value=\"GO\"/>");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println(page);
         }
     }
 

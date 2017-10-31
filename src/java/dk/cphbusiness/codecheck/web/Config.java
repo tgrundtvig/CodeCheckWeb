@@ -13,13 +13,14 @@ public class Config
 {
     // JDBC driver name and database URL
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://localhost:3306/CBA_Code_Check";
+    public static final String DB_URL = "jdbc:mysql://192.168.0.101:3306/edutor";
+    //public static final String DB_URL = "jdbc:mysql://database:3306/CBA_Code_Check";
     //static final String DB_URL = "jdbc:mysql://10.0.0.42:3306/CBA_Code_Check";
 
     
     //  Database credentials
-    public static final String USER = "Edutor";
-    public static final String PASS = "qwerty123";
+    public static final String USER = "edutor";
+    public static final String PASS = "MwQd25YZ99UhjJQY";
     
     //public static final String UPLOAD_FOLDER = "/home/pi/CodeCheck/HandIn/";
     public static final String UPLOAD_FOLDER = "C:\\tmp\\HandIn\\"; 
