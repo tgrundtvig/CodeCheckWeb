@@ -99,7 +99,14 @@ public class CodeChecker implements Runnable
         out.flush();
         while(System.currentTimeMillis() - startTime < test.getTimeout() && process.isAlive())
         {
-            //Busy wait...
+            /*
+            try
+            {
+                wait(100);
+            } catch (InterruptedException ex)
+            {
+            }
+            */
         }
         if(process.isAlive())
         {

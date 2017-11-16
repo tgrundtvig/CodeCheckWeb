@@ -10,6 +10,7 @@ import dk.cphbusiness.codecheck.web.data.Task;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +42,13 @@ public class Upload extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException
     {
-
+        Enumeration<String> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements())
+        {
+            String name = paramNames.nextElement();
+            String value = request.getParameter(name);
+            System.out.println(name + ": " + value);
+        }
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if(!isMultipart)
         {

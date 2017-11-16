@@ -5,18 +5,25 @@
  */
 package dk.cphbusiness.codecheck.web;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Tobias
  */
 public class BootstrapUtil
 {
-    public static String createPage(String title, String body)
+    public static String createPage(String title, String navigation, String body)
     {
-        return createPage(title, body, false);
+        return createPage(title, navigation, body, false);
     }
     
-    public static String createPage(String title, String body, boolean refresh)
+    public static String createPage(String title, String body)
+    {
+        return createPage(title, "", body, false);
+    }
+    
+    public static String createPage(String title, String navigation, String body, boolean refresh)
     {
         StringBuilder res = new StringBuilder();
         res.append("<!DOCTYPE html>");
@@ -30,10 +37,12 @@ public class BootstrapUtil
         res.append("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>");
         if(refresh)
         {
-            res.append("<META HTTP-EQUIV=\"refresh\" CONTENT=\"5\">");
+            res.append("<META HTTP-EQUIV=\"refresh\" CONTENT=\"1\">");
         }
         res.append("</head>");
-        res.append("<body><div class=\"container\">");
+        res.append("<body>");
+        res.append(navigation);
+        res.append("<div class=\"container\">");
         res.append(body);
         res.append("</div></body></html>");
         return res.toString();
@@ -41,6 +50,15 @@ public class BootstrapUtil
     
     public static String code(String s)
     {
+        StringBuilder res = new StringBuilder();
+        Scanner scanner = new Scanner(s);
+        while(scanner.hasNextLine())
+        {
+            res.append("<div style=\"white-space: nowrap\"><code>");
+            res.append(scanner.nextLine());
+            res.append("</code></div><br/>");
+        }
+        /*
         if(s.contains("\n"))
         {
             return "<code>" + s.replace("\n", "<br/>") + "</code>";
@@ -49,5 +67,7 @@ public class BootstrapUtil
         {
             return "<div style=\"white-space: nowrap\"><code>" + s + "</code></div>";
         }
+        */
+        return res.toString();
     }
 }

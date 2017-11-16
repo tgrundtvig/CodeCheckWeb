@@ -110,7 +110,7 @@ public class ShowReport extends HttpServlet
             body.append(hiddenCount);
             body.append(", ").append(hiddenOK).append(" OK, ").append(hiddenFailed).append(" FAILED");
             body.append("</h2>");
-            String page = BootstrapUtil.createPage("Show Report", body.toString(), true);
+            String page = BootstrapUtil.createPage("Show Report", BootstrapNavigagtion.navBar(Nav.getWebSiteName(), Nav.getWebSiteUrl(), Nav.getNavItems()), body.toString(), true);
             out.println(page);
         }
     }

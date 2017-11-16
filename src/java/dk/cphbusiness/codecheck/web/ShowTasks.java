@@ -86,7 +86,7 @@ public class ShowTasks extends HttpServlet
                 body.append("</td></tr>");
             }
             body.append("</table>");
-            String page = BootstrapUtil.createPage("Show assignments", body.toString());
+            String page = BootstrapUtil.createPage("Show assignments", BootstrapNavigagtion.navBar(Nav.getWebSiteName(), Nav.getWebSiteUrl(), Nav.getNavItems("Assignments")), body.toString());
             out.println(page);
         }
     }

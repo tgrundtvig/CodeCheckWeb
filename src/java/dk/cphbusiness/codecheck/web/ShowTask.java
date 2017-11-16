@@ -179,7 +179,7 @@ public class ShowTask extends HttpServlet
                 */
             }
             
-            String page = BootstrapUtil.createPage("Show assignment", body.toString());
+            String page = BootstrapUtil.createPage("Show assignment", BootstrapNavigagtion.navBar(Nav.getWebSiteName(), Nav.getWebSiteUrl(), Nav.getNavItems()), body.toString());
             out.println(page);
         }
     }
